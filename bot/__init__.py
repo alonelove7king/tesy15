@@ -56,14 +56,13 @@ async def download(event):
                 await event.reply(f"🌐 Link : {Config.DOMAIN}/{id}\n🆔 @{Config.CHANNEL_USERNAME}",link_preview=False)
                 return
         
-            elif id_msg := re.search("/start (.*)", event.raw_text ):
-                try :
-                    if id_hex := id_msg.group(1) :
-                        try:
-                            id = int(id_hex,16)
-                        except ValueError:
-                            return
-                        msg = await event.client.get_messages(Config.CHANNEL,ids=id)
+        elif id_msg := re.search("/start (.*)", event.raw_text ):
+            if id_hex := id_msg.group(1) :
+                try:
+                    id = int(id_hex,16)
+                except ValueError:
+                    return
+                msg = await event.client.get_messages(Config.CHANNEL,ids=id)
                         if not msg or not msg.file :
                             return await event.reply("404! File Not Found")
                         if regex := re.search(r"(\d*)/(\d*)",msg.message):
