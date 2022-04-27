@@ -84,7 +84,7 @@ async def download(event):
                         await forward_reply.edit(f"📎 : {Config.DOMAIN}/{id_name}\n\n🤖 : {bot_url}",link_preview=True)
                 return
         if pv:
-            await event.reply(f"🌀خوش آمدید\n🔰برای استفاده از ربات کافی است\nفایل خود را ارسال کرده و سپس لینک آن را دریافت کنید\n\n🆔 @{Config.CHANNEL_USERNAME_TW}")
+            await event.reply(f"🌀خوش آمدید\n🔰برای استفاده از ربات کافی است\nفایل خود را ارسال کرده و سپس لینک آن را دریافت کنید\n\n🆔 @{Config.CHANNEL_USERNAME}")
     elif event.is_channel:
         if event.chat_id == Config.CHANNEL:
             if event.reply_to:
