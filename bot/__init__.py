@@ -13,7 +13,8 @@ client = TelegramClient(
             Config.API_HASH,
             # proxy=("socks5","127.0.0.1",9050)
             ).start(bot_token=Config.TOKEN)
-
+w = dict()
+v = dict()
 username_bot = client.get_me().username
 
 def get_file_name(message):
