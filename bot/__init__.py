@@ -5,6 +5,7 @@ from config import Config
 import asyncio
 import threading
 import re
+import time
 from urllib.parse import quote
 
 client = TelegramClient(
