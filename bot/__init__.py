@@ -24,26 +24,24 @@ def get_file_name(message):
 
 @client.on(events.NewMessage)
 async def download(event):
-    
-        if (pv := event.is_private) or event.is_group :
-            if pv:
-                try:
-                    user = await event.client(functions.channels.GetParticipantRequest(
-                        channel = Config.CHANNEL_USERNAME,
-                        participant = event.sender_id
-                        ))
-                    try :
-                         if user.participant.kicked_by:
-                             return
-                    except:
-                         pass
-                except errors.UserNotParticipantError:
-                    await event.reply(f"🌀برای استفاده از ربات ابتدا باید در کانال ما عضو بشی\n💠برای عضویت روی ایدی زیر کلیک کن سپس دستور /start رو ارسال کن\n\n🔸@{Config.CHANNEL_USERNAME}")
-                    return
-            
-            if event.file :
-                if not pv :
-                    if not event.file.size > 10_000_000:
+    if (pv := event.is_private) or event.is_group :
+        if event.sender_id in w.keys():
+            if w[event.sender_id] > time.time() - 1 :
+                await event.reply(f"⛔️امکان ارسال همزمان چند فایل وجود ندارد⛔️")
+                return
+        w[event.sender_id] = time.time()
+        if pv:
+            try:
+                await event.client(functions.channels.GetParticipantRequest(
+                    channel = Config.CHANNEL_USERNAME_TW,
+                    participant = event.sender_id
+                    ))
+            except errors.UserNotParticipantError:
+                await event.reply(f"🌀برای استفاده از ربات ابتدا باید در کانال ما عضو بشی\n💠برای عضویت روی ایدی زیر کلیک کن سپس دستور /start رو ارسال کن\n\n🔸@{Config.CHANNEL_USERNAME_TW}")
+                return
+        if event.file :
+            if not pv :
+                if not event.file.size > 10_000_000:
                         return 
                 sender = await event.get_sender()
                 msg = await event.client.send_file(
