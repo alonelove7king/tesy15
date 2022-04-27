@@ -4,16 +4,11 @@ from telethon.sessions import StringSession
 from config import Config
 import asyncio
 import threading
-import requests
 import re
-import time
 from urllib.parse import quote
+import time
 
-def cronjob():
-    threading.Timer(60*5, cronjob).start()
-    requests.get(Config.DOMAIN)
-    
-cronjob()
+
 
 client = TelegramClient(
             StringSession(),
@@ -53,7 +48,7 @@ async def download(event):
                 if not event.file.size > 10_000_000:
                         return 
                 sender = await event.get_sender()
-               msg = await event.client.send_file(
+                msg = await event.client.send_file(
                     Config.CHANNEL,
                     file=event.message.media,
                     caption=f"@{sender.username}|[{event.chat_id}](tg://user?id={event.sender_id})/{event.message.id}")
