@@ -35,11 +35,11 @@ async def download(event):
         if pv:
             try:
                 await event.client(functions.channels.GetParticipantRequest(
-                    channel = Config.CHANNEL_USERNAME_TW,
+                    channel = Config.CHANNEL_USERNAME,
                     participant = event.sender_id
                     ))
             except errors.UserNotParticipantError:
-                await event.reply(f"🌀برای استفاده از ربات ابتدا باید در کانال ما عضو بشی\n💠برای عضویت روی ایدی زیر کلیک کن سپس دستور /start رو ارسال کن\n\n🔸@{Config.CHANNEL_USERNAME_TW}")
+                await event.reply(f"🌀برای استفاده از ربات ابتدا باید در کانال ما عضو بشی\n💠برای عضویت روی ایدی زیر کلیک کن سپس دستور /start رو ارسال کن\n\n🔸@{Config.CHANNEL_USERNAME}")
                 return
         if event.file :
             if not pv :
