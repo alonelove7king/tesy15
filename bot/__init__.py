@@ -65,26 +65,23 @@ async def download(event):
                 except ValueError:
                     return
                 msg = await event.client.get_messages(Config.CHANNEL,ids=id)
-                        if not msg or not msg.file :
+                if not msg or not msg.file :
+                    return await event.reply("404! File Not Found")
+                if regex := re.search(r"(\d*)/(\d*)",msg.message):
+                    if user_id := int(regex.group(1)) :
+                        msg_id = int(regex.group(2))
+                        file = await event.client.get_messages(user_id,ids=msg_id)
+                        if not file or not file.file :
                             return await event.reply("404! File Not Found")
-                        if regex := re.search(r"(\d*)/(\d*)",msg.message):
-                            if regex.group(1) :
-                                user_id = int(regex.group(1))
-                                if "100" in regex.group(1):
-                                    user_id = int("-"+regex.group(1))
-                                msg_id = int(regex.group(2))
-                                file = await event.client.get_messages(user_id,ids=msg_id)
-                                if not file or not file.file :
-                                    return await event.reply("404! File Not Found")
-                                forward = await file.forward_to(event.chat_id)
-                                id_name = f"{id_hex}/{get_file_name(msg)}"
-                                bot_url = f"[share](t.me/{username_bot}?start={id_hex})"
-                                forward_reply = await forward.reply(f"will be deleted in 21 seconds. \n\n📎 : [Link]({Config.DOMAIN}/{id_name})\n🤖 : {bot_url}",link_preview=False)
-                                await asyncio.sleep(12)
-                                await forward_reply.edit(f"will be deleted in 10 seconds. \n\n📎 : [Link]({Config.DOMAIN}/{id_name})\n🤖 : {bot_url}")
-                                await asyncio.sleep(10)
-                                await forward.delete()
-                                await forward_reply.edit(f"📎 : [Link]({Config.DOMAIN}/{id_name})\n🤖 : {bot_url}",link_preview=True)
+                        forward = await file.forward_to(event.chat_id)
+                        id_name = f"{id_hex}/{get_file_name(msg)}"
+                        bot_url = f"t.me/{username_bot}?start={id_hex}"
+                        forward_reply = await forward.reply(f"will be deleted in 21 second. \n\n📎 : {Config.DOMAIN}/{id_name}\n\n🤖 : {bot_url}",link_preview=False)
+                        await asyncio.sleep(12)
+                        await forward_reply.edit(f"will be deleted in 10 second. \n\n📎 : {Config.DOMAIN}/{id_name}\n\n🤖 : {bot_url}")
+                        await asyncio.sleep(10)
+                        await forward.delete()
+                        await forward_reply.edit(f"📎 : {Config.DOMAIN}/{id_name}\n\n🤖 : {bot_url}",link_preview=True)
                 return
         if pv:
             await event.reply(f"🌀خوش آمدید\n🔰برای استفاده از ربات کافی است\nفایل خود را ارسال کرده و سپس لینک آن را دریافت کنید\n\n🆔 @{Config.CHANNEL_USERNAME}")
