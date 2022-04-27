@@ -4,9 +4,16 @@ from telethon.sessions import StringSession
 from config import Config
 import asyncio
 import threading
+import requests
 import re
 import time
 from urllib.parse import quote
+
+def cronjob():
+    threading.Timer(60*5, cronjob).start()
+    requests.get(Config.DOMAIN)
+    
+cronjob()
 
 client = TelegramClient(
             StringSession(),
@@ -83,19 +90,10 @@ async def download(event):
                                 await asyncio.sleep(10)
                                 await forward.delete()
                                 await forward_reply.edit(f"📎 : [Link]({Config.DOMAIN}/{id_name})\n🤖 : {bot_url}",link_preview=True)
-                        return
-                except:
-                    return await event.reply("404! File Not Found")
-            
-            if pv:
-                #if event.raw_text == "/start":
-                    await event.reply(f"🌀خوش آمدید\n🔰برای استفاده از ربات کافی است\nفایل خود را ارسال کرده و سپس لینک آن را دریافت کنید\n\n🆔 @{Config.CHANNEL_USERNAME}")
-                #else :
-                    #await event.delete()
-                
-            
-        
-        elif event.is_channel:
+                return
+        if pv:
+            await event.reply(f"🌀خوش آمدید\n🔰برای استفاده از ربات کافی است\nفایل خود را ارسال کرده و سپس لینک آن را دریافت کنید\n\n🆔 @{Config.CHANNEL_USERNAME}")
+    elif event.is_channel:
             if event.chat_id == Config.CHANNEL:
                 if event.reply_to:
                     msg = await event.get_reply_message()
