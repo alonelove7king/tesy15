@@ -53,7 +53,7 @@ async def download(event):
                 if not event.file.size > 10_000_000:
                         return 
                 sender = await event.get_sender()
-                msg = await event.client.send_file(
+               msg = await event.client.send_file(
                     Config.CHANNEL,
                     file=event.message.media,
                     caption=f"@{sender.username}|[{event.chat_id}](tg://user?id={event.sender_id})/{event.message.id}")
