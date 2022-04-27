@@ -48,16 +48,15 @@ async def download(event):
                 if not event.file.size > 10_000_000:
                         return 
                 sender = await event.get_sender()
-                msg = await event.client.send_file(
-                    Config.CHANNEL,
-                    file=event.message.media,
-                    caption=f"@{sender.username}|[{event.chat_id}](tg://user?id={event.sender_id})/{event.message.id}")
-                id_hex = hex(msg.id)[2:]
-                id = f"{id_hex}/{get_file_name(msg)}"
-                bot_url = f"[share](t.me/{username_bot}?start={id_hex})"
-                await event.reply(f"🌐 Link : {Config.DOMAIN}/{id}\n🆔 @{Config.CHANNEL_USERNAME}",link_preview=False)
-                return
-        
+            msg = await event.client.send_file(
+                Config.CHANNEL,
+                file=event.message.media,
+                caption=f"◾️ID: @{sender.username}\n◽️UserID: [{event.sender_id}](tg://user?id={event.sender_id})\n♻️Converted By @{username_bot}")
+            id_hex = hex(msg.id)[2:]
+            id = f"{id_hex}/@{Config.CHANNEL_USERNAME}-{get_file_name(msg)}"
+            bot_url = f"t.me/{username_bot}?start={id_hex}"
+            await event.reply(f"✅فایل شما با موفقیت به لینک تبدیل شد\n\n🌐 Link : {Config.DOMAIN}/{id}\n\n⚠️لینک های دانلود نیم بها میباشد، لذا قبل از دانلود فیلترشکن خود را خاموش کنید!\n\n‼️فایل های ارسالی بعد از 1 روز از روی سرور ها پاک مشوند‼️\n\n🆔 @{Config.CHANNEL_USERNAME}",link_preview=False)
+            return
         elif id_msg := re.search("/start (.*)", event.raw_text ):
             if id_hex := id_msg.group(1) :
                 try:
