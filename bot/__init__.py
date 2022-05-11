@@ -35,7 +35,7 @@ async def download(event):
         w[event.sender_id] = time.time()
         if pv:
             try:
-                await event.client(functions.channels.GetParticipantRequest(
+                    user = await event.client(functions.channels.GetParticipantRequest(
                     channel = Config.CHANNEL_USERNAME,
                     participant = event.sender_id
                     ))
@@ -54,7 +54,7 @@ async def download(event):
                 id_hex = hex(msg.id)[2:]
                 id = f"{id_hex}/@{Config.CHANNEL_USERNAME}-{get_file_name(msg)}"
                 bot_url = f"[share](t.me/{username_bot}?start={id_hex})"
-                await event.reply(f"✅فایل شما با موفقیت به لینک تبدیل شد\n\n🌐 Link : {Config.DOMAIN}/{id}\n\n⚠️لینک های دانلود نیم بها میباشد، لذا قبل از دانلود فیلترشکن خود را خاموش کنید!\n\n‼️فایل های ارسالی بعد از 30 روز از روی سرور ها پاک مشوند‼️\n\n🆔 @{Config.CHANNEL_USERNAME}",link_preview=False)
+                await event.reply(f"✅فایل شما با موفقیت به لینک تبدیل شد\n\n🌐 Link : {Config.DOMAIN}/{id}\n\n💰لینک دونیت (تامین هزینه های سرور) \nhttps://www.payping.ir/d/WiZG\n\n⚠️لینک دانلود نیم بها میباشد، قبل از دانلود VPN خود را خاموش کنید!\n\n‼️فایل های ارسالی بعد از 30 روز از روی سرور ها پاک مشوند‼️\n\n🆔 @{Config.CHANNEL_USERNAME}",link_preview=False)
                 return
         
             elif id_msg := re.search("/start (.*)", event.raw_text ):
