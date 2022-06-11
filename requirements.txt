@@ -7,3 +7,4 @@ Telethon
 requests
 gunicorn
 pyrogram==1.4.16
+aiogram
