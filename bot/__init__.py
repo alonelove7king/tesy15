@@ -44,7 +44,7 @@ async def download(event):
                     ))
             except errors.UserNotParticipantError:
                 await event.send_message(
-                            text=f"🌀برای استفاده از ربات ابتدا باید در کانال ما عضو بشی\n💠برای عضویت روی ایدی زیر کلیک کن سپس دستور /start رو ارسال کن\n\n🔸@{Config.CHANNEL_USERNAME}",
+                            text="🌀برای استفاده از ربات ابتدا باید در کانال ما عضو بشی\n💠برای عضویت روی ایدی زیر کلیک کن سپس دستور /start رو ارسال کن\n\n",
                             reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("💠عضویت در کانال💠", url=f"https://t.me/{Config.CHANNEL_USERNAME}")]]),
               parse_mode="markdown",
               disable_web_page_preview=True
