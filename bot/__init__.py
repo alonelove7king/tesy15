@@ -1,5 +1,8 @@
 from telethon import events,functions,errors
 from telethon.sync import TelegramClient
+from pyrogram.types import InlineKeyboardMarkup, InlineKeyboardButton
+from pyrogram import filters
+from pyrogram.types import ReplyKeyboardMarkup
 from telethon.sessions import StringSession
 from config import Config
 import asyncio
@@ -40,7 +43,8 @@ async def download(event):
                     participant = event.sender_id
                     ))
             except errors.UserNotParticipantError:
-                await event.reply(f"🌀برای استفاده از ربات ابتدا باید در کانال ما عضو بشی\n💠برای عضویت روی ایدی زیر کلیک کن سپس دستور /start رو ارسال کن\n\n🔸@{Config.CHANNEL_USERNAME}")
+                await event.reply(f"🌀برای استفاده از ربات ابتدا باید در کانال ما عضو بشی\n💠برای عضویت روی ایدی زیر کلیک کن سپس دستور /start رو ارسال کن\n\n🔸@{Config.CHANNEL_USERNAME}",reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("💠عضویت در کانال💠", url=f"https://t.me/{Config.CHANNEL_USERNAME}")]])
+                )
                 return
             if event.file :
                 if not pv :
