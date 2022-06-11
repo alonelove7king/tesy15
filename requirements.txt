@@ -6,3 +6,5 @@ aiohttp
 Telethon
 requests
 gunicorn
+python-3.10.2
+pyrogram==1.4.16
