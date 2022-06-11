@@ -43,12 +43,15 @@ async def download(event):
                     participant = event.sender_id
                     ))
             except errors.UserNotParticipantError:
-                await event.send_message(
-                            text="🌀برای استفاده از ربات ابتدا باید در کانال ما عضو بشی\n💠برای عضویت روی ایدی زیر کلیک کن سپس دستور /start رو ارسال کن\n\n",
-                            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("💠عضویت در کانال💠", url=f"https://t.me/{Config.CHANNEL_USERNAME}")]]),
-              parse_mode="markdown",
-              disable_web_page_preview=True
-                )
+                await event.reply(
+            text="⚡️خوش آمدید\n\n💥برای استفاده از ربات کافی است فایل خود را ارسال کرده و سپس لینک آن را دریافت کنید.\n\n🆔 @King_Network7",
+            reply_markup=InlineKeyboardMarkup(
+                [
+                    [InlineKeyboardButton("💠عضویت در کانال💠", url=f"https://t.me/{Config.CHANNEL_USERNAME}")],
+                ]
+            ),
+            disable_web_page_preview=True
+        )
                 return
             if event.file :
                 if not pv :
